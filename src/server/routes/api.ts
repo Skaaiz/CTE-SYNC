@@ -375,7 +375,7 @@ apiRouter.delete('/municipalities/:id', async (req: Request, res: Response) => {
 });
 
 // Upload CTM / Attachment PDF file for a municipality
-apiRouter.post('/municipalities/:id/pdf', upload.single('pdfFile'), async (req: Request, res: Response) => {
+apiRouter.post('/municipalities/:id/pdf', upload.single('pdfFile') as any, async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const file = req.file;
@@ -491,7 +491,7 @@ apiRouter.delete('/municipalities/:id/pdf/:pdfId', async (req: Request, res: Res
 });
 
 // Upload CTM PDF file
-apiRouter.post('/municipalities/:id/ctm', upload.single('ctmFile'), async (req: Request, res: Response) => {
+apiRouter.post('/municipalities/:id/ctm', upload.single('ctmFile') as any, async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const file = req.file;
@@ -659,7 +659,7 @@ apiRouter.post('/municipalities/:id/mappings', async (req: Request, res: Respons
 // ============================================================================
 
 // Preview uploaded Excel
-apiRouter.post('/jobs/preview-excel', upload.single('excelFile'), async (req: Request, res: Response) => {
+apiRouter.post('/jobs/preview-excel', upload.single('excelFile') as any, async (req: Request, res: Response) => {
   try {
     const file = req.file;
     if (!file) {
@@ -675,7 +675,7 @@ apiRouter.post('/jobs/preview-excel', upload.single('excelFile'), async (req: Re
 });
 
 // Start Analysis Job
-apiRouter.post('/jobs/start', upload.single('excelFile'), async (req: Request, res: Response) => {
+apiRouter.post('/jobs/start', upload.single('excelFile') as any, async (req: Request, res: Response) => {
   try {
     const file = req.file;
     const { municipalityId, cnpjColumn, createdBy } = req.body;

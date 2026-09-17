@@ -1,0 +1,138 @@
+{
+  "entities": {
+    "Municipality": {
+      "title": "Municipality",
+      "description": "Dados do município e configurações do Código Tributário Municipal (CTM)",
+      "type": "object",
+      "properties": {
+        "nome": { "type": "string" },
+        "uf": { "type": "string" },
+        "ctmFileName": { "type": "string" },
+        "ctmFileUrl": { "type": "string" },
+        "ctmContentText": { "type": "string" },
+        "aiInstructions": { "type": "string" },
+        "fallbackActivityId": { "type": "string" },
+        "fallbackActivityDescription": { "type": "string" },
+        "confidenceThreshold": { "type": "number" },
+        "openaiVectorStoreId": { "type": "string" },
+        "openaiFileId": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["nome", "uf"]
+    },
+    "MunicipalityRule": {
+      "title": "MunicipalityRule",
+      "description": "Regras tributárias específicas cadastradas por município",
+      "type": "object",
+      "properties": {
+        "municipalityId": { "type": "string" },
+        "name": { "type": "string" },
+        "condition": { "type": "string" },
+        "instruction": { "type": "string" },
+        "priority": { "type": "number" },
+        "active": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["municipalityId", "name", "condition", "instruction"]
+    },
+    "ClassificationMapping": {
+      "title": "ClassificationMapping",
+      "description": "Memória operacional de mapeamentos validados entre CNAE e atividade CTM",
+      "type": "object",
+      "properties": {
+        "municipalityId": { "type": "string" },
+        "cnae": { "type": "string" },
+        "ctmActivityCode": { "type": "string" },
+        "ctmActivityDescription": { "type": "string" },
+        "validated": { "type": "boolean" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["municipalityId", "cnae", "ctmActivityCode"]
+    },
+    "AnalysisJob": {
+      "title": "AnalysisJob",
+      "description": "Lote de processamento e análise cadastral",
+      "type": "object",
+      "properties": {
+        "municipalityId": { "type": "string" },
+        "municipalityName": { "type": "string" },
+        "fileName": { "type": "string" },
+        "total": { "type": "number" },
+        "processed": { "type": "number" },
+        "success": { "type": "number" },
+        "errors": { "type": "number" },
+        "notFound": { "type": "number" },
+        "requiresReviewCount": { "type": "number" },
+        "status": { "type": "string" },
+        "currentProcessingCnpj": { "type": "string" },
+        "currentProcessingName": { "type": "string" },
+        "startedAt": { "type": "string" },
+        "finishedAt": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "createdBy": { "type": "string" }
+      },
+      "required": ["municipalityId", "fileName", "total", "status"]
+    },
+    "JobCompany": {
+      "title": "JobCompany",
+      "description": "Registro de empresa em análise no lote",
+      "type": "object",
+      "properties": {
+        "jobId": { "type": "string" },
+        "municipalityId": { "type": "string" },
+        "cnpj": { "type": "string" },
+        "formattedCnpj": { "type": "string" },
+        "status": { "type": "string" },
+        "receitaWsData": { "type": "object" },
+        "classification": { "type": "object" },
+        "errorDetails": { "type": "string" },
+        "manualReview": { "type": "object" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["jobId", "municipalityId", "cnpj", "status"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Registro de auditoria de alterações manuais",
+      "type": "object",
+      "properties": {
+        "municipalityId": { "type": "string" },
+        "jobId": { "type": "string" },
+        "action": { "type": "string" },
+        "details": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "user": { "type": "string" }
+      },
+      "required": ["municipalityId", "action", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/municipalities/{municipalityId}": {
+      "schema": "Municipality",
+      "description": "Coleção de municípios cadastrados no sistema"
+    },
+    "/municipalityRules/{ruleId}": {
+      "schema": "MunicipalityRule",
+      "description": "Coleção de regras locais por município"
+    },
+    "/classificationMappings/{mappingId}": {
+      "schema": "ClassificationMapping",
+      "description": "Coleção de mapeamentos CNAE -> CTM validados"
+    },
+    "/analysisJobs/{jobId}": {
+      "schema": "AnalysisJob",
+      "description": "Coleção de jobs/lotes de análise"
+    },
+    "/jobCompanies/{companyId}": {
+      "schema": "JobCompany",
+      "description": "Coleção de empresas vinculadas aos lotes de análise"
+    },
+    "/auditLogs/{logId}": {
+      "schema": "AuditLog",
+      "description": "Coleção de logs de auditoria"
+    }
+  }
+}
