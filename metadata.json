@@ -1,0 +1,6 @@
+{
+  "name": "Sistema de Enquadramento Cadastral Municipal",
+  "description": "Sistema completo para automação de consulta na ReceitaWS, enriquecimento e classificação cadastral CTM de empresas com IA.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
